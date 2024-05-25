@@ -19,7 +19,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  separator: (props: LucideProps) => (
+  separator: () => (
     <svg
       className="h-full w-full text-gray-300"
       viewBox="0 0 12 82"
