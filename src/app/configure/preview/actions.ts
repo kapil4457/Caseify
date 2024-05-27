@@ -63,14 +63,15 @@ export const createCheckoutSession = async ({
     images: [configuration.imageUrl],
     default_price_data: {
       currency: "INR",
-      unit_amount: price,
+      unit_amount: price * 100,
     },
   });
 
   const stripe_session = await stripe.checkout.sessions.create({
-    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?orderId=${configuration.id}`,
-    payment_method_types: ["card", "paypal"],
+    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?id=${order.id}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
+    payment_method_types: ["card"],
+    mode: "payment",
     shipping_address_collection: { allowed_countries: ["IN", "US"] },
     metadata: {
       userId: user.id,
