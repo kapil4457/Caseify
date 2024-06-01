@@ -4,7 +4,9 @@ import React from "react";
 import DesignPreviewComponent from "./DesignPreviewComponent";
 
 interface PageProps {
-  [key: string]: string | string[] | undefined;
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
 }
 const page = async ({ searchParams }: PageProps) => {
   const { id } = searchParams;

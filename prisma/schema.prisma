@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum OrderState {
+enum OrderStatus {
   fulfilled
   shipped
   awaiting_shipment
@@ -52,25 +52,27 @@ model Configuration {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String
-  Order     Order[]
+  id    String  @id @default(cuid())
+  email String
+  Order Order[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id                String           @id @default(cuid())
-  configurationId   String
-  configuration     Configuration    @relation(fields: [configurationId], references: [id])
-  user              User             @relation(fields: [userId], references: [id])
-  userId            String
-  amount            Float
-  isPaid            Boolean          @default(false)
-  status            OrderState       @default(awaiting_shipment)
+  id              String        @id @default(cuid())
+  configurationId String
+  configuration   Configuration @relation(fields: [configurationId], references: [id])
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String
+  amount          Float
+  isPaid          Boolean       @default(false)
+  status          OrderStatus   @default(awaiting_shipment)
+
   shippingAddress   ShippingAddress? @relation(fields: [shippingAddressId], references: [id])
   shippingAddressId String?
-  BillingAddress    BillingAddress?  @relation(fields: [billingAddressId], references: [id])
+  billingAddress    BillingAddress?  @relation(fields: [billingAddressId], references: [id])
   billingAddressId  String?
 
   createdAt DateTime @default(now())
@@ -84,9 +86,9 @@ model ShippingAddress {
   city        String
   postalCode  String
   country     String
-  state       String
-  phoneNumber String
-  order       Order[]
+  state       String?
+  phoneNumber String?
+  orders      Order[]
 }
 
 model BillingAddress {
@@ -96,7 +98,7 @@ model BillingAddress {
   city        String
   postalCode  String
   country     String
-  state       String
-  phoneNumber String
-  order       Order[]
+  state       String?
+  phoneNumber String?
+  orders      Order[]
 }
