@@ -40,7 +40,7 @@ export default function Home() {
                   </li>
                   <li className="flex gap-1.5 items-center text-left">
                     <Check className="h-5 w-5 shrink-0 text-green-600" />
-                    Latest Mac models supported
+                    Latest iPhone models supported
                   </li>
                 </div>
               </ul>
